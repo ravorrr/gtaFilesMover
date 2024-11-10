@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gtaFilesMoverConsoleVersion", "gtaFilesMoverConsoleVersion\gtaFilesMoverConsoleVersion.csproj", "{A51E06C0-4996-4993-9DCA-E0BE10E49F9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gtaFilesMoverGUI", "gtaFilesMoverGUI\gtaFilesMoverGUI.csproj", "{FC5F6F3D-A6E4-44A6-BB9A-081D8B899173}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gtaFilesMoverLib", "gtaFilesMoverLib\gtaFilesMoverLib.csproj", "{75B96C57-58F3-4EE5-A7E5-CF3E43907DD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A51E06C0-4996-4993-9DCA-E0BE10E49F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A51E06C0-4996-4993-9DCA-E0BE10E49F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A51E06C0-4996-4993-9DCA-E0BE10E49F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A51E06C0-4996-4993-9DCA-E0BE10E49F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC5F6F3D-A6E4-44A6-BB9A-081D8B899173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC5F6F3D-A6E4-44A6-BB9A-081D8B899173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC5F6F3D-A6E4-44A6-BB9A-081D8B899173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC5F6F3D-A6E4-44A6-BB9A-081D8B899173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75B96C57-58F3-4EE5-A7E5-CF3E43907DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75B96C57-58F3-4EE5-A7E5-CF3E43907DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75B96C57-58F3-4EE5-A7E5-CF3E43907DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75B96C57-58F3-4EE5-A7E5-CF3E43907DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5FAC8CCE-EAEC-4869-B36D-460E5D263A80}
+	EndGlobalSection
+EndGlobal

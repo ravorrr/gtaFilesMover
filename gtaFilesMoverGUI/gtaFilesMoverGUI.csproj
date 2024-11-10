@@ -76,5 +76,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\gtaFilesMoverLib\gtaFilesMoverLib.csproj">
+      <Project>{0ab52ece-b0ca-4550-b5f7-138a84081c26}</Project>
+      <Name>gtaFilesMoverLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
