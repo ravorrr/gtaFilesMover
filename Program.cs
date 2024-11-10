@@ -10,26 +10,13 @@ namespace gtaFilesMoverConsoleVersion
         private static readonly string reshadeBackupFolder = Path.Combine(backupFolder, "reshade");
 
         private static readonly string[] filesToMove = {
-            "mods",
-            "openCameraV.asi",
-            "openCameraV.log",
-            "OpenIV.asi",
-            "OpenIV.log",
-            "asiloader.log",
-            "dinput8.dll",
-            "reshade-shaders",
-            "grand.ini",
-            "new.ini",
-            "ReShade.ini",
-            "ReShadePreset.ini"
+            "mods", "openCameraV.asi", "openCameraV.log", "OpenIV.asi", "OpenIV.log",
+            "asiloader.log", "dinput8.dll", "reshade-shaders", "grand.ini", "new.ini",
+            "ReShade.ini", "ReShadePreset.ini"
         };
 
         private static readonly string[] reshadeFiles = {
-            "reshade-shaders",
-            "grand.ini",
-            "new.ini",
-            "ReShade.ini",
-            "ReShadePreset.ini"
+            "reshade-shaders", "grand.ini", "new.ini", "ReShade.ini", "ReShadePreset.ini"
         };
 
         static void Main(string[] args)
@@ -55,24 +42,12 @@ namespace gtaFilesMoverConsoleVersion
 
                 switch (Console.ReadLine())
                 {
-                    case "1":
-                        MoveAllFilesToBackup();
-                        break;
-                    case "2":
-                        MoveAllFilesToGTA();
-                        break;
-                    case "3":
-                        MoveOnlyReshadeFilesToBackup();
-                        break;
-                    case "4":
-                        Console.WriteLine("Narzędzie odświeżone.");
-                        break;
-                    case "5":
-                        Console.WriteLine("Do zobaczenia!");
-                        return;
-                    default:
-                        Console.WriteLine("Nieprawidłowa opcja. Spróbuj ponownie.");
-                        break;
+                    case "1": MoveFiles(gtaFolder, backupFolder, filesToMove); break;
+                    case "2": MoveFilesFromBackupToGTA(); break;
+                    case "3": MoveFiles(gtaFolder, reshadeBackupFolder, reshadeFiles); break;
+                    case "4": Console.WriteLine("Narzędzie odświeżone."); break;
+                    case "5": Console.WriteLine("Do zobaczenia!"); return;
+                    default: Console.WriteLine("Nieprawidłowa opcja. Spróbuj ponownie."); break;
                 }
 
                 Console.WriteLine("Naciśnij ENTER, aby wrócić do menu.");
@@ -92,58 +67,42 @@ namespace gtaFilesMoverConsoleVersion
                 Console.WriteLine("{0,-12} {1,-20} {2,-15}", "Plik/Folder", file, location);
             }
 
-            Console.WriteLine("=============================================================");
-            Console.WriteLine();
+            Console.WriteLine("=============================================================\n");
         }
 
         static string GetFileLocation(string file)
         {
-            string gtaPath = Path.Combine(gtaFolder, file);
-            string backupPath = Path.Combine(backupFolder, file);
-            string reshadePath = Path.Combine(reshadeBackupFolder, file);
-
-            if (File.Exists(gtaPath) || Directory.Exists(gtaPath))
-                return "GTA V";
-            else if (File.Exists(backupPath) || Directory.Exists(backupPath))
-                return "backup";
-            else if (File.Exists(reshadePath) || Directory.Exists(reshadePath))
-                return "backup/reshade";
-            else
-                return "Nie znaleziono";
+            if (ExistsInPath(gtaFolder, file)) return "GTA V";
+            if (ExistsInPath(backupFolder, file)) return "backup";
+            if (ExistsInPath(reshadeBackupFolder, file)) return "backup/reshade";
+            return "Nie znaleziono";
         }
 
-        static void MoveAllFilesToBackup()
+        static bool ExistsInPath(string path, string file) =>
+            File.Exists(Path.Combine(path, file)) || Directory.Exists(Path.Combine(path, file));
+
+        static void MoveFiles(string sourceFolder, string targetFolder, string[] files)
         {
-            Console.WriteLine("Przenoszenie wszystkich plików z GTA V do backup folder...");
+            Console.WriteLine($"Przenoszenie plików z {sourceFolder} do {targetFolder}...");
 
-            foreach (string file in filesToMove)
+            foreach (string file in files)
             {
-                string sourcePath = Path.Combine(gtaFolder, file);
-                string targetFolder = IsReshadeFile(file) ? reshadeBackupFolder : backupFolder;
-
+                string sourcePath = Path.Combine(sourceFolder, file);
                 MoveFile(sourcePath, targetFolder, file);
             }
         }
 
-        static void MoveAllFilesToGTA()
+        static void MoveFilesFromBackupToGTA()
         {
             Console.WriteLine("Przenoszenie wszystkich plików z backup folder do GTA V...");
 
             foreach (string file in filesToMove)
             {
-                string sourcePath = IsReshadeFile(file) ? Path.Combine(reshadeBackupFolder, file) : Path.Combine(backupFolder, file);
+                string sourcePath = Array.Exists(reshadeFiles, reshadeFile => reshadeFile == file)
+                    ? Path.Combine(reshadeBackupFolder, file)
+                    : Path.Combine(backupFolder, file);
+
                 MoveFile(sourcePath, gtaFolder, file);
-            }
-        }
-
-        static void MoveOnlyReshadeFilesToBackup()
-        {
-            Console.WriteLine("Przenoszenie tylko plików reshade z GTA V do backup/reshade...");
-
-            foreach (string file in reshadeFiles)
-            {
-                string sourcePath = Path.Combine(gtaFolder, file);
-                MoveFile(sourcePath, reshadeBackupFolder, file);
             }
         }
 
@@ -155,15 +114,13 @@ namespace gtaFilesMoverConsoleVersion
             {
                 if (File.Exists(sourcePath))
                 {
-                    Console.WriteLine($"Przenoszę plik {file} z {sourcePath} do {destinationPath}...");
+                    Console.WriteLine($"Przenoszę plik {file} do {destinationPath}...");
                     File.Move(sourcePath, destinationPath);
-                    Console.WriteLine($"Przeniesiono plik {file} do {destinationPath}.");
                 }
                 else if (Directory.Exists(sourcePath))
                 {
-                    Console.WriteLine($"Przenoszę folder {file} z {sourcePath} do {destinationPath}...");
+                    Console.WriteLine($"Przenoszę folder {file} do {destinationPath}...");
                     Directory.Move(sourcePath, destinationPath);
-                    Console.WriteLine($"Przeniesiono folder {file} do {destinationPath}.");
                 }
                 else
                 {
@@ -174,11 +131,6 @@ namespace gtaFilesMoverConsoleVersion
             {
                 Console.WriteLine($"Wystąpił błąd przy przenoszeniu {file}: {ex.Message}");
             }
-        }
-
-        static bool IsReshadeFile(string file)
-        {
-            return Array.Exists(reshadeFiles, reshadeFile => reshadeFile == file);
         }
     }
 }
