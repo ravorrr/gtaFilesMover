@@ -1,0 +1,68 @@
+# Pliki binarne i obiekty
+bin/
+obj/
+
+# Pliki publikacji
+publish/
+
+# Pliki użytkownika Visual Studio
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Folder pakietów NuGet
+packages/
+*.nupkg
+# Jeśli korzystasz z pakietów NuGet lokalnie, możesz pominąć poniższą linię
+# */.nuget/packages/
+
+# Pliki środowiskowe
+*.env
+.env.*
+
+# Pliki dzienników
+*.log
+logs/
+log/
+
+# Konfiguracja IDE
+.idea/
+.vscode/
+.project
+
+# Pliki debugowania
+*.launchSettings.json
+
+# Tymczasowe pliki i dane sesji
+*.tmp
+*.temp
+*.cache
+*.pdb
+*.ilk
+
+# Pliki ustawień użytkownika (wyklucza te dla macOS)
+*.DS_Store
+*.localized
+
+# Pliki tymczasowe systemu operacyjnego
+*.~*
+*.swp
+*.bak
+
+# Pliki generowane przez MSBuild
+*.cache
+*.vspscc
+*.vssscc
+*.orig
+
+# Katalog obiektów .NET (gdy projekt jest zbudowany dla różnych konfiguracji, np. Release/Debug)
+ProjectName/bin/
+ProjectName/obj/
+
+# Wykluczenie plików specyficznych dla macOS i systemu Linux
+._*
+.Trashes
+**Icon?
