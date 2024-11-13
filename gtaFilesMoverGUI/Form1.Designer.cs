@@ -2,15 +2,8 @@
 {
     partial class Form1
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,10 +15,6 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             btnMoveAllToBackup = new Button();
@@ -42,6 +31,9 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
+            listViewFileLocations = new ListView();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
             SuspendLayout();
             // 
             // btnMoveAllToBackup
@@ -80,7 +72,7 @@
             listBoxLog.ItemHeight = 15;
             listBoxLog.Location = new Point(12, 30);
             listBoxLog.Name = "listBoxLog";
-            listBoxLog.Size = new Size(776, 154);
+            listBoxLog.Size = new Size(445, 154);
             listBoxLog.TabIndex = 3;
             // 
             // txtGtaPath
@@ -158,7 +150,6 @@
             label3.Name = "label3";
             label3.Size = new Size(776, 2);
             label3.TabIndex = 12;
-            label3.Text = "label3";
             // 
             // label4
             // 
@@ -167,13 +158,34 @@
             label4.Name = "label4";
             label4.Size = new Size(776, 2);
             label4.TabIndex = 13;
-            label4.Text = "label4";
+            // 
+            // listViewFileLocations
+            // 
+            listViewFileLocations.Columns.AddRange(new ColumnHeader[] { columnHeader2, columnHeader3 });
+            listViewFileLocations.FullRowSelect = true;
+            listViewFileLocations.Location = new Point(463, 30);
+            listViewFileLocations.Name = "listViewFileLocations";
+            listViewFileLocations.Size = new Size(325, 154);
+            listViewFileLocations.TabIndex = 14;
+            listViewFileLocations.UseCompatibleStateImageBehavior = false;
+            listViewFileLocations.View = View.Details;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "File/Folder";
+            columnHeader2.Width = 150;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Location";
+            columnHeader3.Width = 150;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(listViewFileLocations);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -210,5 +222,8 @@
         private Label label2;
         private Label label3;
         private Label label4;
+        private ListView listViewFileLocations;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
     }
 }

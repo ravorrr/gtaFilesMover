@@ -23,7 +23,7 @@ namespace gtaFilesMoverLib
         public delegate void FileMovedHandler(int filesMoved, int totalFiles);
         public static event FileMovedHandler? FileMoved;
 
-        public static void MoveFiles(string[] files, string sourceFolder, string targetFolder, bool isReshade = false)
+        public static void MoveFiles(string[] files, string sourceFolder, string targetFolder, bool moveToReshadeFolder = false)
         {
             int totalFiles = files.Length;
             int filesMoved = 0;
@@ -31,7 +31,8 @@ namespace gtaFilesMoverLib
             foreach (var file in files)
             {
                 string sourcePath = Path.Combine(sourceFolder, file);
-                string destinationPath = isReshade && IsReshadeFile(file)
+
+                string destinationPath = IsReshadeFile(file) && moveToReshadeFolder
                     ? Path.Combine(reshadeBackupFolder, file)
                     : Path.Combine(targetFolder, file);
 
@@ -79,8 +80,21 @@ namespace gtaFilesMoverLib
             return Array.Exists(reshadeFiles, reshadeFile => reshadeFile == file);
         }
 
-        public static void MoveAllFilesToBackup() => MoveFiles(filesToMove, gtaFolder, backupFolder);
-        public static void MoveAllFilesToGTA() => MoveFiles(filesToMove, backupFolder, gtaFolder);
-        public static void MoveOnlyReshadeFilesToBackup() => MoveFiles(reshadeFiles, gtaFolder, reshadeBackupFolder, true);
+        public static void MoveAllFilesToBackup()
+        {
+            MoveFiles(reshadeFiles, gtaFolder, reshadeBackupFolder, moveToReshadeFolder: true);
+            MoveFiles(filesToMove, gtaFolder, backupFolder, moveToReshadeFolder: false);
+        }
+
+        public static void MoveAllFilesToGTA()
+        {
+            MoveFiles(reshadeFiles, reshadeBackupFolder, gtaFolder, moveToReshadeFolder: false);
+            MoveFiles(filesToMove, backupFolder, gtaFolder, moveToReshadeFolder: false);
+        }
+
+        public static void MoveOnlyReshadeFilesToBackup()
+        {
+            MoveFiles(reshadeFiles, gtaFolder, reshadeBackupFolder, true);
+        }
     }
 }
