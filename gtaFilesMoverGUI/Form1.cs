@@ -13,6 +13,9 @@ namespace gtaFilesMoverGUI
 
         private void btnMoveAllToBackup_Click(object sender, EventArgs e)
         {
+            FileMover.gtaFolder = txtGtaPath.Text;
+            FileMover.backupFolder = txtBackupPath.Text;
+
             Log("Przenoszenie wszystkich plików do folderu backup...", addSeparator: true);
             try
             {
@@ -27,6 +30,9 @@ namespace gtaFilesMoverGUI
 
         private void btnMoveAllToGTA_Click(object sender, EventArgs e)
         {
+            FileMover.gtaFolder = txtGtaPath.Text;
+            FileMover.backupFolder = txtBackupPath.Text;
+
             Log("Przenoszenie wszystkich plików do GTA...", addSeparator: true);
             try
             {
@@ -41,6 +47,9 @@ namespace gtaFilesMoverGUI
 
         private void btnMoveReshadeToBackup_Click(object sender, EventArgs e)
         {
+            FileMover.gtaFolder = txtGtaPath.Text;
+            FileMover.backupFolder = txtBackupPath.Text;
+
             Log("Przenoszenie plików reshade do backup...", addSeparator: true);
             try
             {
@@ -70,5 +79,26 @@ namespace gtaFilesMoverGUI
             listBoxLog.TopIndex = listBoxLog.Items.Count - 1;
         }
 
+        private void btnBrowseGtaPath_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtGtaPath.Text = folderDialog.SelectedPath;
+                }
+            }
+        }
+
+        private void btnBrowseBackupPath_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtBackupPath.Text = folderDialog.SelectedPath;
+                }
+            }
+        }
     }
 }

@@ -5,8 +5,8 @@ namespace gtaFilesMoverLib
 {
     public static class FileMover
     {
-        private static readonly string gtaFolder = @"G:\Rockstar Games\Games\Grand Theft Auto V";
-        private static readonly string backupFolder = @"G:\Other\Gta_backup";
+        public static string gtaFolder { get; set; } = @"G:\Rockstar Games\Games\Grand Theft Auto V";
+        public static string backupFolder { get; set; } = @"G:\Other\Gta_backup";
         private static readonly string reshadeBackupFolder = Path.Combine(backupFolder, "reshade");
 
         private static readonly string[] filesToMove = {
