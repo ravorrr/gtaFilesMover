@@ -36,11 +36,13 @@
             txtBackupPath = new TextBox();
             btnBrowseGtaPath = new Button();
             btnBrowseBackupPath = new Button();
+            progressBar = new ProgressBar();
+            lblFileCounter = new Label();
             SuspendLayout();
             // 
             // btnMoveAllToBackup
             // 
-            btnMoveAllToBackup.Location = new Point(115, 75);
+            btnMoveAllToBackup.Location = new Point(132, 93);
             btnMoveAllToBackup.Name = "btnMoveAllToBackup";
             btnMoveAllToBackup.Size = new Size(174, 23);
             btnMoveAllToBackup.TabIndex = 0;
@@ -50,7 +52,7 @@
             // 
             // btnMoveAllToGTA
             // 
-            btnMoveAllToGTA.Location = new Point(115, 104);
+            btnMoveAllToGTA.Location = new Point(132, 122);
             btnMoveAllToGTA.Name = "btnMoveAllToGTA";
             btnMoveAllToGTA.Size = new Size(174, 23);
             btnMoveAllToGTA.TabIndex = 1;
@@ -60,7 +62,7 @@
             // 
             // btnMoveReshadeToBackup
             // 
-            btnMoveReshadeToBackup.Location = new Point(115, 133);
+            btnMoveReshadeToBackup.Location = new Point(132, 151);
             btnMoveReshadeToBackup.Name = "btnMoveReshadeToBackup";
             btnMoveReshadeToBackup.Size = new Size(174, 23);
             btnMoveReshadeToBackup.TabIndex = 2;
@@ -72,28 +74,28 @@
             // 
             listBoxLog.FormattingEnabled = true;
             listBoxLog.ItemHeight = 15;
-            listBoxLog.Location = new Point(411, 14);
+            listBoxLog.Location = new Point(411, 12);
             listBoxLog.Name = "listBoxLog";
-            listBoxLog.Size = new Size(377, 199);
+            listBoxLog.Size = new Size(377, 244);
             listBoxLog.TabIndex = 3;
             // 
             // txtGtaPath
             // 
-            txtGtaPath.Location = new Point(250, 386);
+            txtGtaPath.Location = new Point(250, 296);
             txtGtaPath.Name = "txtGtaPath";
             txtGtaPath.Size = new Size(538, 23);
             txtGtaPath.TabIndex = 4;
             // 
             // txtBackupPath
             // 
-            txtBackupPath.Location = new Point(250, 415);
+            txtBackupPath.Location = new Point(250, 325);
             txtBackupPath.Name = "txtBackupPath";
             txtBackupPath.Size = new Size(538, 23);
             txtBackupPath.TabIndex = 5;
             // 
             // btnBrowseGtaPath
             // 
-            btnBrowseGtaPath.Location = new Point(12, 385);
+            btnBrowseGtaPath.Location = new Point(12, 296);
             btnBrowseGtaPath.Name = "btnBrowseGtaPath";
             btnBrowseGtaPath.Size = new Size(232, 23);
             btnBrowseGtaPath.TabIndex = 6;
@@ -103,7 +105,7 @@
             // 
             // btnBrowseBackupPath
             // 
-            btnBrowseBackupPath.Location = new Point(12, 415);
+            btnBrowseBackupPath.Location = new Point(12, 324);
             btnBrowseBackupPath.Name = "btnBrowseBackupPath";
             btnBrowseBackupPath.Size = new Size(232, 23);
             btnBrowseBackupPath.TabIndex = 7;
@@ -111,11 +113,29 @@
             btnBrowseBackupPath.UseVisualStyleBackColor = true;
             btnBrowseBackupPath.Click += btnBrowseBackupPath_Click;
             // 
+            // progressBar
+            // 
+            progressBar.Location = new Point(12, 415);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(776, 23);
+            progressBar.TabIndex = 8;
+            // 
+            // lblFileCounter
+            // 
+            lblFileCounter.AutoSize = true;
+            lblFileCounter.Location = new Point(12, 397);
+            lblFileCounter.Name = "lblFileCounter";
+            lblFileCounter.Size = new Size(152, 15);
+            lblFileCounter.TabIndex = 9;
+            lblFileCounter.Text = "Postęp przenoszenia plików";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblFileCounter);
+            Controls.Add(progressBar);
             Controls.Add(btnBrowseBackupPath);
             Controls.Add(btnBrowseGtaPath);
             Controls.Add(txtBackupPath);
@@ -140,5 +160,7 @@
         private TextBox txtBackupPath;
         private Button btnBrowseGtaPath;
         private Button btnBrowseBackupPath;
+        private ProgressBar progressBar;
+        private Label lblFileCounter;
     }
 }

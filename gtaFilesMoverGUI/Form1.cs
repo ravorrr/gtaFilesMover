@@ -19,6 +19,21 @@ namespace gtaFilesMoverGUI
             notifyIcon = new NotifyIcon();
             notifyIcon.Icon = SystemIcons.Information;
             notifyIcon.Visible = true;
+            lblFileCounter.Text = "Postêp przenoszenia plików";
+
+            FileMover.FileMoved += UpdateProgress;
+        }
+
+        private void UpdateProgress(int filesMoved, int totalFiles)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<int, int>(UpdateProgress), filesMoved, totalFiles);
+                return;
+            }
+
+            progressBar.Maximum = totalFiles;
+            progressBar.Value = filesMoved;
         }
 
         private void btnMoveAllToBackup_Click(object sender, EventArgs e)
@@ -37,6 +52,10 @@ namespace gtaFilesMoverGUI
             catch (Exception ex)
             {
                 Log($"B³¹d: {ex.Message}", addSeparator: true);
+            }
+            finally
+            {
+                progressBar.Value = 0;
             }
         }
 
@@ -57,6 +76,10 @@ namespace gtaFilesMoverGUI
             {
                 Log($"B³¹d: {ex.Message}", addSeparator: true);
             }
+            finally
+            {
+                progressBar.Value = 0;
+            }
         }
 
         private void btnMoveReshadeToBackup_Click(object sender, EventArgs e)
@@ -75,6 +98,10 @@ namespace gtaFilesMoverGUI
             catch (Exception ex)
             {
                 Log($"B³¹d: {ex.Message}", addSeparator: true);
+            }
+            finally
+            {
+                progressBar.Value = 0;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 
 namespace gtaFilesMoverLib
 {
@@ -9,49 +10,64 @@ namespace gtaFilesMoverLib
         public static string backupFolder { get; set; } = @"G:\Other\Gta_backup";
         private static readonly string reshadeBackupFolder = Path.Combine(backupFolder, "reshade");
 
-        private static readonly string[] filesToMove = {
+        public static readonly string[] filesToMove = {
             "mods", "openCameraV.asi", "openCameraV.log", "OpenIV.asi", "OpenIV.log",
             "asiloader.log", "dinput8.dll", "reshade-shaders", "grand.ini", "new.ini",
             "ReShade.ini", "ReShadePreset.ini"
         };
 
-        private static readonly string[] reshadeFiles = {
+        public static readonly string[] reshadeFiles = {
             "reshade-shaders", "grand.ini", "new.ini", "ReShade.ini", "ReShadePreset.ini"
         };
 
+        public delegate void FileMovedHandler(int filesMoved, int totalFiles);
+        public static event FileMovedHandler? FileMoved;
+
         public static void MoveAllFilesToBackup()
         {
-            Console.WriteLine("Przenoszenie wszystkich plików z GTA V do backup folder...");
+            int totalFiles = filesToMove.Length;
+            int filesMoved = 0;
+
             foreach (var file in filesToMove)
             {
                 string sourcePath = Path.Combine(gtaFolder, file);
                 string targetPath = IsReshadeFile(file) ? Path.Combine(reshadeBackupFolder, file) : Path.Combine(backupFolder, file);
 
                 MoveFile(sourcePath, targetPath);
+                filesMoved++;
+                OnFileMoved(filesMoved, totalFiles);
             }
         }
 
         public static void MoveAllFilesToGTA()
         {
-            Console.WriteLine("Przenoszenie wszystkich plików z backup folder do GTA V...");
+            int totalFiles = filesToMove.Length;
+            int filesMoved = 0;
+
             foreach (var file in filesToMove)
             {
                 string sourcePath = IsReshadeFile(file) ? Path.Combine(reshadeBackupFolder, file) : Path.Combine(backupFolder, file);
                 string targetPath = Path.Combine(gtaFolder, file);
 
                 MoveFile(sourcePath, targetPath);
+                filesMoved++;
+                OnFileMoved(filesMoved, totalFiles);
             }
         }
 
         public static void MoveOnlyReshadeFilesToBackup()
         {
-            Console.WriteLine("Przenoszenie tylko plików reshade z GTA V do backup/reshade...");
+            int totalFiles = reshadeFiles.Length;
+            int filesMoved = 0;
+
             foreach (var file in reshadeFiles)
             {
                 string sourcePath = Path.Combine(gtaFolder, file);
                 string targetPath = Path.Combine(reshadeBackupFolder, file);
 
                 MoveFile(sourcePath, targetPath);
+                filesMoved++;
+                OnFileMoved(filesMoved, totalFiles);
             }
         }
 
@@ -59,9 +75,12 @@ namespace gtaFilesMoverLib
         {
             try
             {
+                Thread.Sleep(200);
+
                 if (File.Exists(sourcePath))
                 {
-                    File.Move(sourcePath, destinationPath);
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+                    File.Move(sourcePath, destinationPath, true);
                     Console.WriteLine($"Przeniesiono plik {Path.GetFileName(sourcePath)}.");
                 }
                 else if (Directory.Exists(sourcePath))
@@ -78,6 +97,11 @@ namespace gtaFilesMoverLib
             {
                 Console.WriteLine($"Błąd przenoszenia pliku/folderu: {ex.Message}");
             }
+        }
+
+        private static void OnFileMoved(int filesMoved, int totalFiles)
+        {
+            FileMoved?.Invoke(filesMoved, totalFiles);
         }
 
         private static bool IsReshadeFile(string file)
