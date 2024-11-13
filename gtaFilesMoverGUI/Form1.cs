@@ -1,14 +1,22 @@
 using System;
 using System.Windows.Forms;
 using gtaFilesMoverLib;
+using System.Media;
 
 namespace gtaFilesMoverGUI
 {
     public partial class Form1 : Form
     {
+        private NotifyIcon notifyIcon;
+
         public Form1()
         {
             InitializeComponent();
+
+            // Inicjalizacja NotifyIcon
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = SystemIcons.Information;
+            notifyIcon.Visible = true;
         }
 
         private void btnMoveAllToBackup_Click(object sender, EventArgs e)
@@ -21,6 +29,8 @@ namespace gtaFilesMoverGUI
             {
                 FileMover.MoveAllFilesToBackup();
                 Log("Sukces: Przeniesiono wszystkie pliki do backup.", addSeparator: true);
+                ShowNotification("Przeniesiono wszystkie pliki do backup.");
+                SystemSounds.Exclamation.Play();
             }
             catch (Exception ex)
             {
@@ -38,6 +48,8 @@ namespace gtaFilesMoverGUI
             {
                 FileMover.MoveAllFilesToGTA();
                 Log("Sukces: Przeniesiono wszystkie pliki do GTA.", addSeparator: true);
+                ShowNotification("Przeniesiono wszystkie pliki do GTA.");
+                SystemSounds.Exclamation.Play();
             }
             catch (Exception ex)
             {
@@ -55,6 +67,8 @@ namespace gtaFilesMoverGUI
             {
                 FileMover.MoveOnlyReshadeFilesToBackup();
                 Log("Sukces: Przeniesiono pliki reshade do backup.", addSeparator: true);
+                ShowNotification("Przeniesiono pliki reshade do backup.");
+                SystemSounds.Exclamation.Play();
             }
             catch (Exception ex)
             {
@@ -77,6 +91,13 @@ namespace gtaFilesMoverGUI
             }
 
             listBoxLog.TopIndex = listBoxLog.Items.Count - 1;
+        }
+
+        private void ShowNotification(string message)
+        {
+            notifyIcon.BalloonTipTitle = "Operacja zakoñczona";
+            notifyIcon.BalloonTipText = message;
+            notifyIcon.ShowBalloonTip(3000);
         }
 
         private void btnBrowseGtaPath_Click(object sender, EventArgs e)
