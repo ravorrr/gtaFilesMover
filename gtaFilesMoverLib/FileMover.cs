@@ -23,49 +23,19 @@ namespace gtaFilesMoverLib
         public delegate void FileMovedHandler(int filesMoved, int totalFiles);
         public static event FileMovedHandler? FileMoved;
 
-        public static void MoveAllFilesToBackup()
+        public static void MoveFiles(string[] files, string sourceFolder, string targetFolder, bool isReshade = false)
         {
-            int totalFiles = filesToMove.Length;
+            int totalFiles = files.Length;
             int filesMoved = 0;
 
-            foreach (var file in filesToMove)
+            foreach (var file in files)
             {
-                string sourcePath = Path.Combine(gtaFolder, file);
-                string targetPath = IsReshadeFile(file) ? Path.Combine(reshadeBackupFolder, file) : Path.Combine(backupFolder, file);
+                string sourcePath = Path.Combine(sourceFolder, file);
+                string destinationPath = isReshade && IsReshadeFile(file)
+                    ? Path.Combine(reshadeBackupFolder, file)
+                    : Path.Combine(targetFolder, file);
 
-                MoveFile(sourcePath, targetPath);
-                filesMoved++;
-                OnFileMoved(filesMoved, totalFiles);
-            }
-        }
-
-        public static void MoveAllFilesToGTA()
-        {
-            int totalFiles = filesToMove.Length;
-            int filesMoved = 0;
-
-            foreach (var file in filesToMove)
-            {
-                string sourcePath = IsReshadeFile(file) ? Path.Combine(reshadeBackupFolder, file) : Path.Combine(backupFolder, file);
-                string targetPath = Path.Combine(gtaFolder, file);
-
-                MoveFile(sourcePath, targetPath);
-                filesMoved++;
-                OnFileMoved(filesMoved, totalFiles);
-            }
-        }
-
-        public static void MoveOnlyReshadeFilesToBackup()
-        {
-            int totalFiles = reshadeFiles.Length;
-            int filesMoved = 0;
-
-            foreach (var file in reshadeFiles)
-            {
-                string sourcePath = Path.Combine(gtaFolder, file);
-                string targetPath = Path.Combine(reshadeBackupFolder, file);
-
-                MoveFile(sourcePath, targetPath);
+                MoveFile(sourcePath, destinationPath);
                 filesMoved++;
                 OnFileMoved(filesMoved, totalFiles);
             }
@@ -77,9 +47,9 @@ namespace gtaFilesMoverLib
             {
                 Thread.Sleep(200);
 
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
                 if (File.Exists(sourcePath))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
                     File.Move(sourcePath, destinationPath, true);
                     Console.WriteLine($"Przeniesiono plik {Path.GetFileName(sourcePath)}.");
                 }
@@ -108,5 +78,9 @@ namespace gtaFilesMoverLib
         {
             return Array.Exists(reshadeFiles, reshadeFile => reshadeFile == file);
         }
+
+        public static void MoveAllFilesToBackup() => MoveFiles(filesToMove, gtaFolder, backupFolder);
+        public static void MoveAllFilesToGTA() => MoveFiles(filesToMove, backupFolder, gtaFolder);
+        public static void MoveOnlyReshadeFilesToBackup() => MoveFiles(reshadeFiles, gtaFolder, reshadeBackupFolder, true);
     }
 }
