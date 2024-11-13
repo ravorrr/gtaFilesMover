@@ -34,6 +34,7 @@
             listViewFileLocations = new ListView();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
+            lblProgressPercentage = new Label();
             SuspendLayout();
             // 
             // btnMoveAllToBackup
@@ -113,7 +114,7 @@
             // 
             progressBar.Location = new Point(12, 343);
             progressBar.Name = "progressBar";
-            progressBar.Size = new Size(776, 23);
+            progressBar.Size = new Size(776, 34);
             progressBar.TabIndex = 8;
             // 
             // lblFileCounter
@@ -180,11 +181,22 @@
             columnHeader3.Text = "Location";
             columnHeader3.Width = 150;
             // 
+            // lblProgressPercentage
+            // 
+            lblProgressPercentage.AutoSize = true;
+            lblProgressPercentage.Location = new Point(753, 325);
+            lblProgressPercentage.Name = "lblProgressPercentage";
+            lblProgressPercentage.Size = new Size(23, 15);
+            lblProgressPercentage.TabIndex = 15;
+            lblProgressPercentage.Text = "0%";
+            lblProgressPercentage.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblProgressPercentage);
             Controls.Add(listViewFileLocations);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -225,5 +237,6 @@
         private ListView listViewFileLocations;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
+        private Label lblProgressPercentage;
     }
 }

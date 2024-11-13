@@ -59,8 +59,11 @@ namespace gtaFilesMoverGUI
                 return;
             }
 
-            progressBar.Maximum = totalFiles;
+            progressBar.Maximum = totalFiles > 0 ? totalFiles : 1;
             progressBar.Value = filesMoved;
+
+            int percentage = totalFiles > 0 ? (int)((double)filesMoved / totalFiles * 100) : 100;
+            lblProgressPercentage.Text = $"{percentage}%";
         }
 
         private void btnMoveAllToBackup_Click(object sender, EventArgs e)
