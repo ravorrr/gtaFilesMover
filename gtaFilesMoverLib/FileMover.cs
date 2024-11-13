@@ -8,8 +8,9 @@ namespace gtaFilesMoverLib
         public static string gtaFolder { get; set; } = @"G:\Rockstar Games\Games\Grand Theft Auto V";
         public static string backupFolder { get; set; } = @"G:\Other\Gta_backup";
         private static readonly string reshadeBackupFolder = Path.Combine(backupFolder, "reshade");
+        public static readonly string backupRootFolder = @"G:\Other\Gta_backup\PreviousBackup";
 
-        private static readonly string[] filesToMove = {
+        public static readonly string[] filesToMove = {
             "mods", "openCameraV.asi", "openCameraV.log", "OpenIV.asi", "OpenIV.log",
             "asiloader.log", "dinput8.dll", "reshade-shaders", "grand.ini", "new.ini",
             "ReShade.ini", "ReShadePreset.ini"
@@ -18,6 +19,72 @@ namespace gtaFilesMoverLib
         private static readonly string[] reshadeFiles = {
             "reshade-shaders", "grand.ini", "new.ini", "ReShade.ini", "ReShadePreset.ini"
         };
+
+        public static void CreateBackup()
+        {
+            Console.WriteLine("Tworzenie kopii zapasowej przed przeniesieniem...");
+
+            string backupFolder = Path.Combine(backupRootFolder, DateTime.Now.ToString("yyyyMMdd_HHmmss"));
+            Directory.CreateDirectory(backupFolder);
+
+            foreach (var file in filesToMove)
+            {
+                string sourcePath = Path.Combine(gtaFolder, file);
+                string destinationPath = Path.Combine(backupFolder, file);
+
+                CopyFileOrDirectory(sourcePath, destinationPath);
+            }
+
+            Console.WriteLine("Kopia zapasowa utworzona.");
+        }
+
+        private static void CopyFileOrDirectory(string sourcePath, string destinationPath)
+        {
+            try
+            {
+                if (File.Exists(sourcePath))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath) ?? string.Empty);
+                    File.Copy(sourcePath, destinationPath, true);
+                    Console.WriteLine($"Skopiowano plik {Path.GetFileName(sourcePath)} do kopii zapasowej.");
+                }
+                else if (Directory.Exists(sourcePath))
+                {
+                    CopyDirectory(sourcePath, destinationPath);
+                    Console.WriteLine($"Skopiowano folder {Path.GetFileName(sourcePath)} do kopii zapasowej.");
+                }
+                else
+                {
+                    Console.WriteLine($"Plik lub folder {Path.GetFileName(sourcePath)} nie istnieje w {sourcePath}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Błąd podczas tworzenia kopii zapasowej: {ex.Message}");
+            }
+        }
+
+        private static void CopyDirectory(string sourceDir, string destinationDir)
+        {
+            Directory.CreateDirectory(destinationDir);
+
+            foreach (var filePath in Directory.GetFiles(sourceDir))
+            {
+                string destFilePath = Path.Combine(destinationDir, Path.GetFileName(filePath));
+                File.Copy(filePath, destFilePath, true);
+            }
+
+            foreach (var dirPath in Directory.GetDirectories(sourceDir))
+            {
+                string destDirPath = Path.Combine(destinationDir, Path.GetFileName(dirPath));
+                CopyDirectory(dirPath, destDirPath);
+            }
+        }
+
+        public static void RestoreFileOrDirectory(string sourcePath, string destinationPath)
+        {
+            CopyFileOrDirectory(sourcePath, destinationPath);
+        }
 
         public static void MoveAllFilesToBackup()
         {

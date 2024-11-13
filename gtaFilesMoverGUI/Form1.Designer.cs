@@ -36,11 +36,12 @@
             txtBackupPath = new TextBox();
             btnBrowseGtaPath = new Button();
             btnBrowseBackupPath = new Button();
+            btnRestoreBackup = new Button();
             SuspendLayout();
             // 
             // btnMoveAllToBackup
             // 
-            btnMoveAllToBackup.Location = new Point(115, 75);
+            btnMoveAllToBackup.Location = new Point(70, 93);
             btnMoveAllToBackup.Name = "btnMoveAllToBackup";
             btnMoveAllToBackup.Size = new Size(174, 23);
             btnMoveAllToBackup.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             // btnMoveAllToGTA
             // 
-            btnMoveAllToGTA.Location = new Point(115, 104);
+            btnMoveAllToGTA.Location = new Point(70, 122);
             btnMoveAllToGTA.Name = "btnMoveAllToGTA";
             btnMoveAllToGTA.Size = new Size(174, 23);
             btnMoveAllToGTA.TabIndex = 1;
@@ -60,7 +61,7 @@
             // 
             // btnMoveReshadeToBackup
             // 
-            btnMoveReshadeToBackup.Location = new Point(115, 133);
+            btnMoveReshadeToBackup.Location = new Point(70, 151);
             btnMoveReshadeToBackup.Name = "btnMoveReshadeToBackup";
             btnMoveReshadeToBackup.Size = new Size(174, 23);
             btnMoveReshadeToBackup.TabIndex = 2;
@@ -72,9 +73,9 @@
             // 
             listBoxLog.FormattingEnabled = true;
             listBoxLog.ItemHeight = 15;
-            listBoxLog.Location = new Point(411, 14);
+            listBoxLog.Location = new Point(295, 16);
             listBoxLog.Name = "listBoxLog";
-            listBoxLog.Size = new Size(377, 199);
+            listBoxLog.Size = new Size(493, 349);
             listBoxLog.TabIndex = 3;
             // 
             // txtGtaPath
@@ -111,11 +112,22 @@
             btnBrowseBackupPath.UseVisualStyleBackColor = true;
             btnBrowseBackupPath.Click += btnBrowseBackupPath_Click;
             // 
+            // btnRestoreBackup
+            // 
+            btnRestoreBackup.Location = new Point(70, 253);
+            btnRestoreBackup.Name = "btnRestoreBackup";
+            btnRestoreBackup.Size = new Size(174, 23);
+            btnRestoreBackup.TabIndex = 8;
+            btnRestoreBackup.Text = "Przywróć kopię zapasową";
+            btnRestoreBackup.UseVisualStyleBackColor = true;
+            btnRestoreBackup.Click += btnRestoreBackup_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnRestoreBackup);
             Controls.Add(btnBrowseBackupPath);
             Controls.Add(btnBrowseGtaPath);
             Controls.Add(txtBackupPath);
@@ -140,5 +152,6 @@
         private TextBox txtBackupPath;
         private Button btnBrowseGtaPath;
         private Button btnBrowseBackupPath;
+        private Button btnRestoreBackup;
     }
 }

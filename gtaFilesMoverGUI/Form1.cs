@@ -26,6 +26,9 @@ namespace gtaFilesMoverGUI
             FileMover.gtaFolder = txtGtaPath.Text;
             FileMover.backupFolder = txtBackupPath.Text;
 
+            Log("Tworzenie kopii zapasowej przed przeniesieniem...");
+            FileMover.CreateBackup();
+
             Log("Przenoszenie wszystkich plików do folderu backup...", addSeparator: true);
             try
             {
@@ -45,6 +48,9 @@ namespace gtaFilesMoverGUI
             FileMover.gtaFolder = txtGtaPath.Text;
             FileMover.backupFolder = txtBackupPath.Text;
 
+            Log("Tworzenie kopii zapasowej przed przeniesieniem...");
+            FileMover.CreateBackup();
+
             Log("Przenoszenie wszystkich plików do GTA...", addSeparator: true);
             try
             {
@@ -63,6 +69,9 @@ namespace gtaFilesMoverGUI
         {
             FileMover.gtaFolder = txtGtaPath.Text;
             FileMover.backupFolder = txtBackupPath.Text;
+
+            Log("Tworzenie kopii zapasowej przed przeniesieniem...");
+            FileMover.CreateBackup();
 
             Log("Przenoszenie plików reshade do backup...", addSeparator: true);
             try
@@ -125,6 +134,32 @@ namespace gtaFilesMoverGUI
                     Properties.Settings.Default.LastBackupPath = folderDialog.SelectedPath;
                     Properties.Settings.Default.Save();
                 }
+            }
+        }
+
+        private void btnRestoreBackup_Click(object sender, EventArgs e)
+        {
+            var latestBackupFolder = Directory.GetDirectories(FileMover.backupRootFolder)
+                                              .OrderByDescending(d => d)
+                                              .FirstOrDefault();
+
+            if (latestBackupFolder != null)
+            {
+                Log("Przywracanie plików z ostatniej kopii zapasowej...", addSeparator: true);
+                foreach (var file in FileMover.filesToMove)
+                {
+                    string sourcePath = Path.Combine(latestBackupFolder, file);
+                    string targetPath = Path.Combine(FileMover.gtaFolder, file);
+
+                    FileMover.RestoreFileOrDirectory(sourcePath, targetPath);
+                }
+                Log("Przywrócono pliki z ostatniej kopii zapasowej.");
+                ShowNotification("Przywrócono pliki z ostatniej kopii zapasowej.");
+                SystemSounds.Exclamation.Play();
+            }
+            else
+            {
+                Log("Brak kopii zapasowej do przywrócenia.", addSeparator: true);
             }
         }
     }
