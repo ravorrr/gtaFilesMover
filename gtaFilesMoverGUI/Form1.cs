@@ -157,9 +157,9 @@ namespace gtaFilesMoverGUI
 
         private void ShowNotification(string message)
         {
-            notifyIcon.BalloonTipTitle = "Operacja zakoñczona";
-            notifyIcon.BalloonTipText = message;
-            notifyIcon.ShowBalloonTip(3000);
+            //notifyIcon.BalloonTipTitle = "Operacja zakoñczona";
+            //notifyIcon.BalloonTipText = message;
+            //notifyIcon.ShowBalloonTip(3000);
         }
 
         private void btnBrowseGtaPath_Click(object sender, EventArgs e)
