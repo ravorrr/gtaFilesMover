@@ -13,7 +13,9 @@ namespace gtaFilesMoverGUI
         {
             InitializeComponent();
 
-            // Inicjalizacja NotifyIcon
+            txtGtaPath.Text = Properties.Settings.Default.LastGtaPath;
+            txtBackupPath.Text = Properties.Settings.Default.LastBackupPath;
+
             notifyIcon = new NotifyIcon();
             notifyIcon.Icon = SystemIcons.Information;
             notifyIcon.Visible = true;
@@ -107,6 +109,8 @@ namespace gtaFilesMoverGUI
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     txtGtaPath.Text = folderDialog.SelectedPath;
+                    Properties.Settings.Default.LastGtaPath = folderDialog.SelectedPath;
+                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -118,6 +122,8 @@ namespace gtaFilesMoverGUI
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     txtBackupPath.Text = folderDialog.SelectedPath;
+                    Properties.Settings.Default.LastBackupPath = folderDialog.SelectedPath;
+                    Properties.Settings.Default.Save();
                 }
             }
         }
