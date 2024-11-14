@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using gtaFilesMoverLib;
 using System.Media;
@@ -59,14 +60,12 @@ namespace gtaFilesMoverGUI
                 return;
             }
 
-            progressBar.Maximum = totalFiles > 0 ? totalFiles : 1;
+            progressBar.Maximum = totalFiles;
             progressBar.Value = filesMoved;
-
-            int percentage = totalFiles > 0 ? (int)((double)filesMoved / totalFiles * 100) : 100;
-            lblProgressPercentage.Text = $"{percentage}%";
+            lblFileCounter.Text = $"Przenoszenie plików: {filesMoved}/{totalFiles} ({(filesMoved * 100) / totalFiles}%)";
         }
 
-        private void btnMoveAllToBackup_Click(object sender, EventArgs e)
+        private async void btnMoveAllToBackup_Click(object sender, EventArgs e)
         {
             FileMover.gtaFolder = txtGtaPath.Text;
             FileMover.backupFolder = txtBackupPath.Text;
@@ -74,7 +73,7 @@ namespace gtaFilesMoverGUI
             Log("Przenoszenie wszystkich plików do folderu backup...", addSeparator: true);
             try
             {
-                FileMover.MoveAllFilesToBackup();
+                await Task.Run(() => FileMover.MoveAllFilesToBackup());
                 Log("Sukces: Przeniesiono wszystkie pliki do backup.", addSeparator: true);
                 ShowNotification("Przeniesiono wszystkie pliki do backup.");
                 SystemSounds.Exclamation.Play();
@@ -90,7 +89,7 @@ namespace gtaFilesMoverGUI
             }
         }
 
-        private void btnMoveAllToGTA_Click(object sender, EventArgs e)
+        private async void btnMoveAllToGTA_Click(object sender, EventArgs e)
         {
             FileMover.gtaFolder = txtGtaPath.Text;
             FileMover.backupFolder = txtBackupPath.Text;
@@ -98,7 +97,7 @@ namespace gtaFilesMoverGUI
             Log("Przenoszenie wszystkich plików do GTA...", addSeparator: true);
             try
             {
-                FileMover.MoveAllFilesToGTA();
+                await Task.Run(() => FileMover.MoveAllFilesToGTA());
                 Log("Sukces: Przeniesiono wszystkie pliki do GTA.", addSeparator: true);
                 ShowNotification("Przeniesiono wszystkie pliki do GTA.");
                 SystemSounds.Exclamation.Play();
@@ -114,7 +113,7 @@ namespace gtaFilesMoverGUI
             }
         }
 
-        private void btnMoveReshadeToBackup_Click(object sender, EventArgs e)
+        private async void btnMoveReshadeToBackup_Click(object sender, EventArgs e)
         {
             FileMover.gtaFolder = txtGtaPath.Text;
             FileMover.backupFolder = txtBackupPath.Text;
@@ -122,7 +121,7 @@ namespace gtaFilesMoverGUI
             Log("Przenoszenie plików reshade do backup...", addSeparator: true);
             try
             {
-                FileMover.MoveOnlyReshadeFilesToBackup();
+                await Task.Run(() => FileMover.MoveOnlyReshadeFilesToBackup());
                 Log("Sukces: Przeniesiono pliki reshade do backup.", addSeparator: true);
                 ShowNotification("Przeniesiono pliki reshade do backup.");
                 SystemSounds.Exclamation.Play();
@@ -157,9 +156,7 @@ namespace gtaFilesMoverGUI
 
         private void ShowNotification(string message)
         {
-            //notifyIcon.BalloonTipTitle = "Operacja zakoñczona";
-            //notifyIcon.BalloonTipText = message;
-            //notifyIcon.ShowBalloonTip(3000);
+            SystemSounds.Exclamation.Play();
         }
 
         private void btnBrowseGtaPath_Click(object sender, EventArgs e)
