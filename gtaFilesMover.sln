@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gtaFilesMoverConsoleVersion
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gtaFilesMoverLib", "gtaFilesMoverLib\gtaFilesMoverLib.csproj", "{75B96C57-58F3-4EE5-A7E5-CF3E43907DD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gtaFilesMoverGUI", "gtaFilesMoverGUI\gtaFilesMoverGUI.csproj", "{FE254D5E-5087-4746-B15C-50E7D60B927B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gtaFilesMoverGUI", "gtaFilesMoverGUI\gtaFilesMoverGUI.csproj", "{FE254D5E-5087-4746-B15C-50E7D60B927B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -34,6 +34,7 @@
             listViewFileLocations = new ListView();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
+            label5 = new Label();
             SuspendLayout();
             // 
             // btnMoveAllToBackup
@@ -180,11 +181,21 @@
             columnHeader3.Text = "Location";
             columnHeader3.Width = 150;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(463, 12);
+            label5.Name = "label5";
+            label5.Size = new Size(201, 15);
+            label5.TabIndex = 15;
+            label5.Text = "Aktualna lokalizacja plików/folderów";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label5);
             Controls.Add(listViewFileLocations);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -225,5 +236,6 @@
         private ListView listViewFileLocations;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
+        private Label label5;
     }
 }
