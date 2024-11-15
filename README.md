@@ -1,3 +1,3 @@
 # gtaFilesMover
-## Licencja
-Ten projekt jest udostępniony na warunkach [Apache License 2.0](LICENSE). Proszę o zachowanie informacji o autorze w zmodyfikowanych wersjach tego kodu.
+## License
+This project is licensed under the terms of the [Apache License 2.0](LICENSE). Please retain the author's information in any modified versions of this code.
