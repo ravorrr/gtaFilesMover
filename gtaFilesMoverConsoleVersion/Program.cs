@@ -21,7 +21,7 @@ namespace gtaFilesMoverConsoleVersion
 
         static void Main(string[] args)
         {
-            Console.Title = "Narzędzie do szybkiego przenoszenia plików GTA V";
+            Console.Title = "gtaFilesMover";
             MainMenu();
         }
 

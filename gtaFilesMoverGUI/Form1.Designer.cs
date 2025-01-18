@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             btnMoveAllToBackup = new Button();
             btnMoveAllToGTA = new Button();
             btnMoveReshadeToBackup = new Button();
@@ -211,8 +212,9 @@
             Controls.Add(btnMoveReshadeToBackup);
             Controls.Add(btnMoveAllToGTA);
             Controls.Add(btnMoveAllToBackup);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Narzędzie do przenoszenia plików GTA V";
+            Text = "gtaFilesMover";
             ResumeLayout(false);
             PerformLayout();
         }
